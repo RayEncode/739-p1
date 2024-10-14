@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package kvstore;
+
+// The key-value store service definition.
+service KVStore {
+  // Get the value corresponding to a key.
+  rpc Get(GetRequest) returns (GetResponse);
+
+  // Put a key-value pair into the store.
+  rpc Put(PutRequest) returns (PutResponse);
+}
+
+// Request message for Get.
+message GetRequest {
+  string key = 1;
+}
+
+// Response message for Get.
+message GetResponse {
+  int32 status = 1; // 0 if key found, -1 on failure or not found.
+  string value = 2; // Present if key is found.
+}
+
+// Request message for Put.
+message PutRequest {
+  string key = 1;
+  string value = 2;
+}
+
+// Response message for Put.
+message PutResponse {
+  int32 status = 1; // 0 if old value exists, 1 if no old value, -1 on failure.
+  string old_value = 2; // Present if old value exists.
+}
